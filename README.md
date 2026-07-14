@@ -78,10 +78,17 @@ To strictly adhere to intellectual property regulations, **full proprietary macr
 If you use the *Gru* dataset in your research, please cite the following work:
 
 ```bibtex
-@article{gru_dataset_2026,
-  title = {Supporting the Curation of Educational Texts: Using Computational Methods for Violent Content Screening},
-  author = {Omitted for Review},
-  journal = {Under Review},
-  year = {2026}
+@inproceedings{gru_2026,
+ author = {Lara Dias and João Nogueira and João Castro and Lucas Larcher and Jairo Souza},
+ title = {Supporting the Curation of Educational Texts: Using Computational Methods for Violent Content Screening},
+ booktitle = {Anais do XXXVII Simpósio Brasileiro de Informática na Educação},
+ location = {Goiânia/GO},
+ year = {2026},
+ keywords = {},
+ issn = {},
+ pages = {},
+ publisher = {SBC},
+ address = {Porto Alegre, RS, Brasil},
 }
+
 ```
