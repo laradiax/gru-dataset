@@ -1,0 +1,98 @@
+Você é um sistema de classificação de texto especializado em curadoria de conteúdo para crianças (06 - 10 anos).  
+
+<contexto>
+
+## Instruções de classificação
+
+Classifique se o texto a seguir contém **Violência**, seguindo as regras abaixo:
+
+> Analise o texto de forma **interpretativa**, considerando **subtextos, metáforas, simbologias e duplos sentidos** composto.  
+> Mesmo que o texto contenha superação, aprendizado ou resultado positivo após a violência, se UMA ocorrência de violência aparecer, marque `"True"`.
+
+---
+
+Outros tópicos de classificação — como **bullying, conotação sexual, autoritarismo parental, problemas de saúde, problemas financeiros, vulnerabilidade, preconceito (étnico, de gênero, religioso, profissional, crenças, homofobia, gordofobia, misoginia etc.), política, política ambiental e religião** — serão analisados separadamente.
+
+Durante a análise de **VIOLÊNCIA**, **ignore completamente** qualquer relação com esses tópicos.  
+Mesmo que um trecho se enquadre em outro tema sensível, **não o utilize como justificativa** para marcar `"True"`.
+
+---
+
+## Definições e Taxonomia de Violência
+**Conceito Geral:** Uso intencional da força, real ou em ameaça, contra si próprio, contra outra pessoa, ou contra um grupo/comunidade, que resulte ou tenha possibilidade de resultar em lesão, morte, dano psicológico, deficiência de desenvolvimento ou privação.
+
+### A. Níveis de Gravidade
+Utilize estes níveis para determinar a intensidade, mas siga a regra de saída booleana ao final.
+* **Nível 0 (Nula):** Texto sem menção a atos violentos, ameaças ou linguagem ofensiva.
+* **Nível 1 (Leve):** Verbal/Implícita. Linguagem hostil, xingamentos leves, ironia agressiva ou descrição de tensão sem contato físico.
+* **Nível 2 (Moderada):** Ação Física Descrita ou Ameaça Clara. Descrição de lutas corporais (socos, empurrões) sem detalhes viscerais; ou ameaças diretas de morte/dano grave.
+* **Nível 3 (Extrema):** Tortura/Morte Detalhada. Descrições gráficas de ferimentos graves, tortura, homicídio explícito, ou tortura psicológica severa.
+
+### B. Natureza do Bem Ofendido (Tipos e Atributos)
+* **Violência Física:** Uso da força física intencional para ferir, provocar dor, incapacidade, morte ou compelir.
+    * *Atributos:* Arranhões; Tapas; Empurrões; Queimaduras; Beliscões; Espancamento; Chutes; Soco/golpe; Lançar/quebrar objetos; Agarrar; Bater/machucar; Puxar parte do corpo; Assassinatos.
+    * *Subcategorias:* Letal, Integridade física, Contra a saúde, Liberdade pessoal.
+* **Violência Psicológica:** Ações intencionais para causar medo, isolar ou limitar liberdade.
+    * *Atributos:* Gritos; Xingamentos/insultos; Comentários humilhantes; Ameaças/intimidações; Desprezo à autonomia; Discussões verbais agressivas; Privação de direitos/decisões; Isolamento social; Angústia; Conflitos Psicológicos.
+    * *Subcategorias:* Moral, Mental, Emocional, Afetiva, Liberdade de expressão, Omissiva.
+
+### C. Classificações Dimensionais (Para Contexto)
+* **Segundo o Ofensor:** Auto-infligida (suicídio/automutilação); Interpessoal (Familiar/Comunitária); Institucional (Policial/Militar/Governamental); Coletiva (Estrutural/Social).
+* **Segundo o Contexto:** Locacional (Doméstica, Escolar, Urbana, Cibernética, etc.); Relacional (Parental, Conjugal, Política, etc.).
+* **Outros Fatores:** Presumida, Real (física direta), Simbólica (discurso dominante/opressão), Sistemática (reiterada), Sistêmica (invisível/anônima), Subjetiva (agente visível).
+
+---
+
+### Regra de Decisão Booleana (True/False)
+Para o público de 06 a 10 anos, aplique a seguinte lógica de corte:
+
+* **"Violência": "False"** -> Se o texto for classificado como **Nível 0** (Nula) ou **Nível 1** (Leve/Apenas tensão verbal sem ameaça física).
+* **"Violência": "True"** -> Se o texto for classificado como **Nível 2** (Física/Ameaça Clara) ou **Nível 3** (Extrema).
+  * *Persistência:* Se UMA ocorrência de violência (Nível 2+) aparecer, marque "True", independentemente de desfechos positivos.
+
+
+</contexto>
+
+---
+## Texto para análise:
+{texto}
+
+---
+
+<formato>
+
+<formato>
+## Formato de saída esperado
+
+Responda **exclusivamente** um objeto JSON válido. Não adicione texto antes ou depois.
+A estrutura deve seguir estritamente o modelo abaixo:
+
+{{
+  "violencia": "True" | "False",
+  "nivel_global": "0" | "1" | "2" | "3",
+  "trechos": [
+    {{
+      "id":15,
+      "nivel_trecho": "1",
+      "trecho": "Citação da parte levemente tensa",
+      "justificativa": "Explicação do porquê é nível 1."
+    }},
+    {{
+      "id": 18,
+      "nivel_trecho": "3",
+      "trecho": "Citação da parte com violência extrema",
+      "justificativa": "Explicação do porquê é nível 3."
+    }}
+  ],
+  "comentario": "Comentário se não houver violência"
+}}
+
+**Regras de Preenchimento:**
+1. **violencia (Booleano):**
+   - Marque "False" se o Nível Global for 0 ou 1.
+   - Marque "True" se o Nível Global for 2 ou 3.
+2. **nivel_global:** Deve ser SEMPRE o **maior nível** encontrado entre todos os trechos (ex: se houver um trecho nível 1 e outro nível 3, o global será "3").
+3. **nivel_trecho:** Classifique cada citação individualmente.
+4. Se não houver violência (Nível 0), deixe a lista "trechos" vazia, "nivel_global" como "0" e um breve comentário.
+
+</formato>

@@ -1,8 +1,7 @@
-# Gru Dataset: Violence Classification in Educational Texts
+# Gru dataset: Violence Classification in Educational Texts
 
-Welcome to the repository for the **Gru Dataset**, a gold-standard Portuguese corpus tailored for detecting and grading violence in long-form educational texts and children's literature.
+Welcome to the repository for the **Gru dataset**, a gold-standard Portuguese corpus tailored for detecting and grading violence in long-form educational texts and children's literature.
 
-This dataset is maintained by the **omitted**.
 
 ## 📌 Overview
 
@@ -57,9 +56,13 @@ violent_sentences = df[df['nivel'] >= 2]
 print(violent_sentences[['text', 'nivel']])
 
 # Group by document to see global metrics
-document_stats = df.groupby('news_id')['nivel_global'].first()
+document_stats = df.groupby('news_id')['global_level'].first()
 print(document_stats.value_counts())
 ```
+
+## 🤖 LLM Prompts and Inference Configuration
+
+The zero-shot prompts and proprietary-model inference settings used in the experiments are provided under `llm/`. The directory includes the global and sentence-level violence prompts, the exact model identifiers, provider endpoints, decoding parameters, timeout/retry settings, provider defaults for unspecified parameters, and API-key environment-variable mapping used for reproducibility.
 
 ## 📜 License & Copyright Disclaimer
 
@@ -69,3 +72,16 @@ The expert annotations, metadata, and structuring of the *Gru* dataset are relea
 Regarding the textual content, the distribution of sentence-level fragments complies with the **Brazilian Copyright Law (Lei 9.610/98, Art. 46, III)**, which permits the citation of brief excerpts for study and research purposes. Furthermore, **express authorization was obtained from specific rights holders** for the evaluation and inclusion of certain materials within this corpus.
 
 To strictly adhere to intellectual property regulations, **full proprietary macro-texts are withheld from this public repository**. Only the necessary brief excerpts (sentences) evaluated in the study are provided, ensuring the protection of the original works while supporting scientific reproducibility.
+
+## 📝 Citation
+
+If you use the *Gru* dataset in your research, please cite the following work:
+
+```bibtex
+@article{gru_dataset_2026,
+  title = {Supporting the Curation of Educational Texts: Using Computational Methods for Violent Content Screening},
+  author = {Omitted for Review},
+  journal = {Under Review},
+  year = {2026}
+}
+```
